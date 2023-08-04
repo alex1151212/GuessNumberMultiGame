@@ -1,0 +1,11 @@
+{
+  "name": "GuessNumberMultiGame",
+  "uuid": "185398f2-0ff3-43a5-9aad-ce09b7b812fa",
+  "version": "3.6.3",
+  "creator": {
+    "version": "3.6.3"
+  },
+  "devDependencies": {
+    "axios": "^0.19.2"
+  }
+}
