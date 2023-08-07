@@ -1,17 +1,17 @@
 import {
   _decorator,
+  Button,
   Component,
   instantiate,
-  Label,
   Node,
   NodePool,
   Prefab,
-  ScrollView,
   UITransform,
   Vec2,
 } from "cc";
-import { ClientEventType } from "../../../System/Event.type";
+import { GameEventType } from "../../../System/Event.type";
 import { GameRoomItem } from "./GameRoomItem";
+import Client from "../../../System/Client/Client";
 const { ccclass, property } = _decorator;
 
 interface GameRoomType {
@@ -39,25 +39,24 @@ export class GameRoomView extends Component {
 
   protected onLoad(): void {
     this._root = this.scrollContent.node;
-    GameEvent.on(ClientEventType.onMessage, this._displayGameRoom, this);
+    GameEvent.on(GameEventType.GetGames, this._displayGameRoom, this);
   }
 
   protected onDestroy(): void {
-    GameEvent.off(ClientEventType.onMessage, this._displayGameRoom, this);
+    GameEvent.off(GameEventType.GetGames, this._displayGameRoom, this);
   }
 
-  private _displayGameRoom(message: { data: string; type: string }) {
-    if (message?.type == "GetGames") {
-      this._reset();
-      const jsonData = JSON.parse(message.data) as GameRoomType;
+  private _displayGameRoom(message: string) {
+    if (this.currentGameRooms.length > 0) this._reset();
 
-      for (let key in jsonData) {
-        const newGameRoom = this._getGameRoom();
-        newGameRoom.node.parent = this.scrollContent.node;
-        newGameRoom.setData(jsonData[key].id, jsonData[key].playerAmount);
+    const jsonData = JSON.parse(message) as GameRoomType;
 
-        this._updateScrollViewContentSize();
-      }
+    console.log(jsonData);
+
+    for (let key in jsonData) {
+      const newGameRoom = this._getGameRoom();
+      newGameRoom.node.parent = this.scrollContent.node;
+      newGameRoom.setData(jsonData[key].id, jsonData[key].playerAmount);
     }
   }
 
@@ -69,28 +68,21 @@ export class GameRoomView extends Component {
         newNode.on("recycle", () => {
           this._recycleGameRoom(newNode.getComponent(GameRoomItem));
         });
+
         return newNode;
       })();
+
     return node.getComponent(GameRoomItem);
   }
 
   private _reset() {
     this.currentGameRooms.forEach((room) => {
       room.node.parent = null;
-      room.node.emit("recycle");
+      this._recycleGameRoom(room);
     });
   }
 
-  private _recycleGameRoom(book: GameRoomItem) {
-    this._gameRoomPool.put(book.node);
-  }
-
-  private _updateScrollViewContentSize() {
-    const uiTransform = this.scrollContent;
-
-    uiTransform.setContentSize(
-      this.horizontalSpacing.x * (this.currentGameRooms.length + 1),
-      uiTransform.contentSize.y
-    );
+  private _recycleGameRoom(room: GameRoomItem) {
+    this._gameRoomPool.put(room.node);
   }
 }

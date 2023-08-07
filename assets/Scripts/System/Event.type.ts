@@ -1,13 +1,15 @@
 import { EventTarget } from "cc";
 
 export enum ClientEventType {
-  onMessage = "OnMessage",
+  OnMessage = "OnMessage",
 }
 export enum GameEventType {
-  getGames = "GetGames",
-  createGames = "CreateGames",
-  getPlayers = "GetPlayers",
-  joinGame = "JoinGame",
+  GetGames = "GetGames",
+  CreateGames = "CreateGames",
+  GetPlayers = "GetPlayers",
+  JoinGame = "JoinGame",
+  Playing = "Playing",
+  GameStart = "GameStart",
 }
 
 window.GameEvent = new EventTarget();

@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "messageLogItem",
+    "_name": "LogItem",
     "_objFlags": 0,
     "_native": "",
     "data": {
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "messageLogItem",
+    "_name": "LogItem",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -32,8 +32,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -142,
-      "y": -10.15,
+      "x": -109.61,
+      "y": -16.6,
       "z": 0
     },
     "_lrot": {
@@ -71,19 +71,19 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 131.33,
-      "height": 25.2
+      "width": 220,
+      "height": 33.2
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 1
+      "y": 0.5
     },
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "14tNSRW2tEh5emBOpg7Goy"
+    "fileId": "77rOLUCapBoaJ/P6m8WqWy"
   },
   {
     "__type__": "cc.Label",
@@ -106,14 +106,14 @@
       "b": 0,
       "a": 255
     },
-    "_string": "ScrollView content",
+    "_string": "",
     "_horizontalAlign": 0,
-    "_verticalAlign": 0,
+    "_verticalAlign": 1,
     "_actualFontSize": 16,
-    "_fontSize": 16,
+    "_fontSize": 20,
     "_fontFamily": "Arial",
-    "_lineHeight": 20,
-    "_overflow": 0,
+    "_lineHeight": 40,
+    "_overflow": 2,
     "_enableWrapText": true,
     "_font": null,
     "_isSystemFontUsed": true,
@@ -127,7 +127,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "4ev5hINp1G6IFjOBce8Oxw"
+    "fileId": "2dsArZpqNCCKp7rrelmRh0"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -137,6 +137,6 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "feIT7MalZG5qNTiAQ0RTvT"
+    "fileId": "02Q07VO6VM8IteVkMAdneA"
   }
 ]

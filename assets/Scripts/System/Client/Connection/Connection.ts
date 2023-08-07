@@ -3,7 +3,7 @@ import NetworkWebsocket from "./NetworkWebsocket";
 export enum PathName {}
 
 export default class Connection {
-  private websocket: NetworkWebsocket;
+  public websocket: NetworkWebsocket;
 
   /** gameServer address + game id */
   private gameDomain: string = "";

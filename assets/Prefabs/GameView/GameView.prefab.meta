@@ -2,12 +2,12 @@
   "ver": "1.1.40",
   "importer": "prefab",
   "imported": true,
-  "uuid": "77484a88-5320-4237-9d3b-c2351a58f282",
+  "uuid": "59c33f75-3fe7-43e3-ad32-5e7e9a21b61f",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "messageLogItem"
+    "syncNodeName": "GameView"
   }
 }

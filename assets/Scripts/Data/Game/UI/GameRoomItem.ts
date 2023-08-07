@@ -1,20 +1,37 @@
-import { _decorator, Component, Label, Node } from "cc";
+import { _decorator, Button, Component, Label, Node } from "cc";
+import Client from "../../../System/Client/Client";
 const { ccclass, property } = _decorator;
 
 @ccclass("GameRoomItem")
 export class GameRoomItem extends Component {
   @property(Label)
-  private readonly gameName: Label = null;
+  private readonly gameNameLabel: Label = null;
 
   @property(Label)
-  private readonly playerAmount: Label = null;
+  private readonly playerAmountLabel: Label = null;
 
-  private _root: Node = null;
+  @property(Button)
+  private readonly button: Button = null;
 
-  protected onLoad(): void {}
+  private _gameName: string = null;
+  private _playerAmount: string = null;
+
+  // private _root: Node = null;
+
+  protected onLoad(): void {
+    this.node.on(Button.EventType.CLICK, () => {
+      Client.Instance.joinGame(this._gameName);
+    });
+  }
 
   public setData(gameName: string, playerAmount: number) {
-    this.gameName.string = gameName.toString();
-    this.playerAmount.string = playerAmount.toString();
+    this._gameName = gameName.toString();
+    this._playerAmount = playerAmount.toString();
+    this.setDisplay();
+  }
+
+  private setDisplay() {
+    this.gameNameLabel.string = this._gameName;
+    this.playerAmountLabel.string = this._playerAmount;
   }
 }

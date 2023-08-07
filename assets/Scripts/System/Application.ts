@@ -7,12 +7,15 @@ import {
   _decorator,
   director,
   game,
-  instantiate
+  instantiate,
 } from "cc";
 import ApplicationConfig from "../Data/Type/Application.type";
 import Parameter from "../Toolkit/Utils/Parameter";
 import Client from "./Client/Client";
-import { ClientEventType } from "./Event.type";
+import { ClientEventType, GameEventType } from "./Event.type";
+import { Message, PlayingDataType } from "../Toolkit/Types/Message.type";
+import { GameRoomView } from "../Data/Game/UI/GameRoomView";
+import { MessageLogView } from "../Data/Game/UI/MessageLogView";
 
 const { ccclass, property } = _decorator;
 
@@ -25,10 +28,10 @@ export default class Application extends Component {
   private config: ApplicationConfig = null;
 
   @property(Node)
-  private messageViewContent: Node = null;
+  private messageLogView: Node = null;
 
-  @property(Prefab)
-  private messageViewItem: Prefab = null;
+  @property(GameRoomView)
+  private gameRoomView: GameRoomView = null;
 
   private static instance: Application = null;
 
@@ -60,22 +63,45 @@ export default class Application extends Component {
     this.overrideDefaultConfig();
 
     await Client.Instance.init();
-    GameEvent.on(ClientEventType.onMessage, (message: { data: string }) => {
-      const item = instantiate(this.messageViewItem);
-
-      item.getComponent(LabelComponent).string = message.data;
-    //   const itemHeight = item.getComponent(UITransform).contentSize.height;
-    //   const contentItemAmount = this.messageViewContent.children.length;
-    //   item.setPosition(
-    //     new Vec3(
-    //       item.position.x,
-    //       -contentItemAmount * (itemHeight + 10),
-    //       undefined
-    //     )
-    //   );
-      item.parent = this.messageViewContent;
+    GameEvent.on(ClientEventType.OnMessage, (message: Message) => {
+      console.log(message);
+      this._messageHandler(message);
     });
+    GameEvent.on(
+      GameEventType.GameStart,
+      () => {
+        this.gameRoomView.node.active = false;
+        this.messageLogView.active = true;
+      },
+      this
+    );
   }
+
+  private _messageHandler(message: Message) {
+    if (message) {
+      switch (message.type) {
+        case GameEventType.GetGames:
+          GameEvent.emit(GameEventType.GetGames, message.data);
+          break;
+        case GameEventType.CreateGames:
+          break;
+        case GameEventType.GetPlayers:
+          break;
+        case GameEventType.JoinGame:
+          break;
+        case GameEventType.Playing:
+          GameEvent.emit(
+            GameEventType.Playing,
+            message.data as PlayingDataType
+          );
+          break;
+        case GameEventType.GameStart:
+          GameEvent.emit(GameEventType.GameStart);
+          break;
+      }
+    }
+  }
+
   private overrideDefaultConfig(): void {
     const { config } = this;
     config.serverAddress = Parameter.get("gameDomain", config.serverAddress);

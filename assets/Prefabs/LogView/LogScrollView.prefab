@@ -642,7 +642,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 220,
-      "height": 400
+      "height": 33.2
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -666,7 +666,7 @@
     "__prefab": {
       "__id__": 31
     },
-    "_resizeMode": 0,
+    "_resizeMode": 1,
     "_layoutType": 2,
     "_cellSize": {
       "__type__": "cc.Size",
@@ -798,7 +798,7 @@
       "__id__": 28
     },
     "messageLogItemPrefab": {
-      "__uuid__": "77484a88-5320-4237-9d3b-c2351a58f282",
+      "__uuid__": "3a5c666d-fa8f-400b-b447-e77e403d8fc5",
       "__expectedType__": "cc.Prefab"
     },
     "verticalSpacing": {

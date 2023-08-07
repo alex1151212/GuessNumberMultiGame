@@ -1,6 +1,12 @@
 import { EventTarget, log } from "cc";
 import Connection from "./Connection/Connection";
 import Application from "../Application";
+import {
+  JoinGameDataType,
+  Message,
+  PlayingDataType,
+} from "../../Toolkit/Types/Message.type";
+import { GameEventType } from "../Event.type";
 
 export default class Client extends EventTarget {
   private static instance: Client = null;
@@ -19,6 +25,11 @@ export default class Client extends EventTarget {
   }
 
   private _connection: Connection = null;
+
+  public _send(data: Message) {
+    const jsonMessage = JSON.stringify(data);
+    this._connection.websocket.send(jsonMessage);
+  }
 
   /**
    * 建立連線
@@ -39,8 +50,39 @@ export default class Client extends EventTarget {
         if (this.playerId != null) resolve(this.playerId);
       }, 500);
     });
+    this.getGames();
     return this.playerId;
   }
 
+  public getGames() {
+    const getGamesMessage: Message = {
+      type: GameEventType.GetGames,
+    };
+    this._send(getGamesMessage);
+  }
+
+  public joinGame(gameRoomId: string) {
+    const data: JoinGameDataType = {
+      gameId: gameRoomId,
+      playerId: Client.Instance.playerId,
+    };
+    const getGamesMessage: Message = {
+      type: GameEventType.JoinGame,
+      data: data,
+    };
+    this._send(getGamesMessage);
+  }
+
+  public createGame() {}
   
+  public playGame(guessNumber: string) {
+    const data: PlayingDataType = {
+      value: guessNumber,
+    };
+    const PlayingMessage: Message = {
+      type: GameEventType.Playing,
+      data: data,
+    };
+    this._send(PlayingMessage);
+  }
 }

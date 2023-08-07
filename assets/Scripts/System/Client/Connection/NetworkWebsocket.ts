@@ -37,7 +37,7 @@ export default class NetworkWebsocket {
       const jsonData =
         receiveData instanceof Object ? receiveData : JSON.parse(receiveData);
       if (jsonData?.Id) return this.startHandler(jsonData?.Id);
-      GameEvent.emit(ClientEventType.onMessage, jsonData);
+      GameEvent.emit(ClientEventType.OnMessage, jsonData);
     };
     this.websocket.onerror = (event) => {
       error(event);
