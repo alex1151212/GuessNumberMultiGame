@@ -46,17 +46,14 @@ export class GameRoomView extends Component {
     GameEvent.off(GameEventType.GetGames, this._displayGameRoom, this);
   }
 
-  private _displayGameRoom(message: string) {
+  private _displayGameRoom(message: Object) {
     if (this.currentGameRooms.length > 0) this._reset();
+    const gameRoomData = message as GameRoomType
 
-    const jsonData = JSON.parse(message) as GameRoomType;
-
-    console.log(jsonData);
-
-    for (let key in jsonData) {
+    for (let key in gameRoomData) {
       const newGameRoom = this._getGameRoom();
       newGameRoom.node.parent = this.scrollContent.node;
-      newGameRoom.setData(jsonData[key].id, jsonData[key].playerAmount);
+      newGameRoom.setData(gameRoomData[key].id, gameRoomData[key].playerAmount);
     }
   }
 

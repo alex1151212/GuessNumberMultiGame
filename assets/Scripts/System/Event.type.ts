@@ -10,6 +10,10 @@ export enum GameEventType {
   JoinGame = "JoinGame",
   Playing = "Playing",
   GameStart = "GameStart",
+  NormalEnd = "NormalEnd",
+
+  SendValue = "SendValue",
 }
+
 
 window.GameEvent = new EventTarget();

@@ -13,7 +13,11 @@ import ApplicationConfig from "../Data/Type/Application.type";
 import Parameter from "../Toolkit/Utils/Parameter";
 import Client from "./Client/Client";
 import { ClientEventType, GameEventType } from "./Event.type";
-import { Message, PlayingDataType } from "../Toolkit/Types/Message.type";
+import {
+  Message,
+  NormalEndRespType,
+  PlayingDataType,
+} from "../Toolkit/Types/Message.type";
 import { GameRoomView } from "../Data/Game/UI/GameRoomView";
 import { MessageLogView } from "../Data/Game/UI/MessageLogView";
 
@@ -67,11 +71,13 @@ export default class Application extends Component {
       console.log(message);
       this._messageHandler(message);
     });
+    
     GameEvent.on(
-      GameEventType.GameStart,
-      () => {
+      GameEventType.JoinGame,
+      (gameRoomId: string) => {
         this.gameRoomView.node.active = false;
         this.messageLogView.active = true;
+        Client.Instance.joinGame(gameRoomId);
       },
       this
     );
@@ -97,6 +103,12 @@ export default class Application extends Component {
           break;
         case GameEventType.GameStart:
           GameEvent.emit(GameEventType.GameStart);
+          break;
+        case GameEventType.NormalEnd:
+          GameEvent.emit(
+            GameEventType.NormalEnd,
+            message.data as NormalEndRespType
+          );
           break;
       }
     }

@@ -5,11 +5,6 @@ export enum ApplicationMode {
   Debug = 1,
 }
 
-enum WalletType {
-  Single = 1,
-  Multiple,
-}
-
 const { ccclass, property } = _decorator;
 
 @ccclass("ApplicationConfig")
