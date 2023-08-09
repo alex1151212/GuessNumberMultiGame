@@ -26,5 +26,7 @@ build-job:
   stage: build
   script:
     - rm -rf /app/web/*
+    - ls -al
     - cp -r build/web-desktop/* /app/web/
+    - ls -al /app/web/assets/main/
 
