@@ -20,7 +20,7 @@ stages:          # List of stages for jobs, and their order of execution
   - build
 
 before_script:
-    - git checkout release
+    - git checkout origin/release
 build-job:  
          # This job runs in the build stage, which runs first.
   stage: build
