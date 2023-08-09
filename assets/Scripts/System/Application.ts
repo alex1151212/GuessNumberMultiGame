@@ -67,11 +67,11 @@ export default class Application extends Component {
     this.overrideDefaultConfig();
 
     await Client.Instance.init();
+
     GameEvent.on(ClientEventType.OnMessage, (message: Message) => {
-      console.log(message);
       this._messageHandler(message);
     });
-    
+
     GameEvent.on(
       GameEventType.JoinGame,
       (gameRoomId: string) => {
@@ -88,8 +88,6 @@ export default class Application extends Component {
       switch (message.type) {
         case GameEventType.GetGames:
           GameEvent.emit(GameEventType.GetGames, message.data);
-          break;
-        case GameEventType.CreateGames:
           break;
         case GameEventType.GetPlayers:
           break;
@@ -116,6 +114,8 @@ export default class Application extends Component {
 
   private overrideDefaultConfig(): void {
     const { config } = this;
-    config.serverAddress = Parameter.get("gameDomain", config.serverAddress);
+    // config.serverAddress = Parameter.get("gameDomain", config.serverAddress);
+    config.serverAddress =
+      "wss://gnm-api.codle.cc/ws/" + Parameter.get("answer", "1234");
   }
 }

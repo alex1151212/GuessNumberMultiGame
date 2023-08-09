@@ -33,8 +33,6 @@ export default class NetworkWebsocket {
       console.log("Open");
     };
     this.websocket.onmessage = (event: MessageEvent) => {
-      console.log(event.data);
-
       const receiveData = JSON.parse(event.data);
       const jsonData =
         receiveData instanceof Object ? receiveData : JSON.parse(receiveData);

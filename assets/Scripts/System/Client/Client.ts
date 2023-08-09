@@ -5,6 +5,7 @@ import {
   JoinGameDataType,
   Message,
   PlayingDataType,
+  CreateGameDataType,
 } from "../../Toolkit/Types/Message.type";
 import { GameEventType } from "../Event.type";
 
@@ -26,7 +27,7 @@ export default class Client extends EventTarget {
 
   private _connection: Connection = null;
 
-  public _send(data: Message) {
+  private _send(data: Message) {
     const jsonMessage = JSON.stringify(data);
     this._connection.websocket.send(jsonMessage);
   }
@@ -61,10 +62,9 @@ export default class Client extends EventTarget {
     this._send(getGamesMessage);
   }
 
-  public joinGame(gameRoomId: string) {
+  public joinGame(gameId: string) {
     const data: JoinGameDataType = {
-      gameId: gameRoomId,
-      playerId: Client.Instance.playerId,
+      gameId: gameId,
     };
     const getGamesMessage: Message = {
       type: GameEventType.JoinGame,
@@ -73,8 +73,6 @@ export default class Client extends EventTarget {
     this._send(getGamesMessage);
   }
 
-  public createGame() {}
-  
   public playGame(guessNumber: string) {
     const data: PlayingDataType = {
       value: guessNumber,
@@ -84,5 +82,16 @@ export default class Client extends EventTarget {
       data: data,
     };
     this._send(PlayingMessage);
+  }
+
+  public createGame(gameId: string) {
+    const data: CreateGameDataType = {
+      gameId: gameId,
+    };
+    const getGamesMessage: Message = {
+      type: GameEventType.CreateGame,
+      data: data,
+    };
+    this._send(getGamesMessage);
   }
 }

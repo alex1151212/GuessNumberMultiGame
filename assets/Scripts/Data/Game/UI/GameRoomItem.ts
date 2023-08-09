@@ -17,7 +17,6 @@ export class GameRoomItem extends Component {
   private _gameName: string = null;
   private _playerAmount: string = null;
 
-  // private _root: Node = null;
 
   protected onLoad(): void {
     this.node.on(Button.EventType.CLICK, () => {

@@ -5,7 +5,7 @@ export enum ClientEventType {
 }
 export enum GameEventType {
   GetGames = "GetGames",
-  CreateGames = "CreateGames",
+  CreateGame = "CreateGame",
   GetPlayers = "GetPlayers",
   JoinGame = "JoinGame",
   Playing = "Playing",
@@ -15,5 +15,8 @@ export enum GameEventType {
   SendValue = "SendValue",
 }
 
+export enum ButtonEventType {
+  OnCreateGameBtnClick = "OnCreateGameBtnClick",
+}
 
 window.GameEvent = new EventTarget();

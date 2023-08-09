@@ -6,7 +6,9 @@ export interface Message {
 }
 export interface JoinGameDataType {
   gameId: string;
-  playerId: string;
+}
+export interface CreateGameDataType {
+  gameId: string;
 }
 
 export interface PlayingDataType {
