@@ -4,6 +4,7 @@ import {
   instantiate,
   Label,
   Node,
+  NodePool,
   Prefab,
   ScrollView,
   UITransform,
@@ -27,13 +28,21 @@ export class MessageLogView extends Component {
 
   private _root: Node = null;
 
+  private readonly _logPool: NodePool = new NodePool();
+
   private get currentLogs() {
     return this._root.getComponentsInChildren(Label);
   }
 
   protected onLoad(): void {
     this._root = this.scrollContent.node;
+
     GameEvent.on(GameEventType.Playing, this._displayLog.bind(this));
+    GameEvent.on(GameEventType.GameStart, () => {
+      if (this.currentLogs) {
+        this._reset;
+      }
+    });
   }
 
   private _displayLog(message: PlayingDataType) {
@@ -41,24 +50,38 @@ export class MessageLogView extends Component {
     if (message.round === Client.Instance.playerId) {
       resp = "這回合提示: " + message.resp.a + "A" + message.resp.b + "B";
     } else {
-      resp = "對手這回合得到的提示: " + message.resp.a + "A" + message.resp.b + "B";
+      resp =
+        "對手這回合得到的提示: " + message.resp.a + "A" + message.resp.b + "B";
     }
+    const newNode = this._getNewLog();
 
-    this._getNewLog().string = resp;
-    // this._updateScrollViewContentSize();
+    newNode.string = resp;
+    newNode.node.parent = this._root;
   }
 
   private _getNewLog() {
-    const node = instantiate(this.messageLogItemPrefab);
-    node.parent = this.scrollContent.node;
+    const node =
+      this._logPool.get() ??
+      (() => {
+        const newNode = instantiate(this.messageLogItemPrefab);
+        newNode.on("recycle", () => {
+          this._recycleLog(newNode.getComponent(Label));
+        });
+
+        return newNode;
+      })();
+
     return node.getComponent(Label);
   }
-  // private _updateScrollViewContentSize() {
-  //   const uiTransform = this.scrollContent;
 
-  //   uiTransform.setContentSize(
-  //     uiTransform.contentSize.x,
-  //     this.verticalSpacing.y * (this.currentLogs.length + 1)
-  //   );
-  // }
+  private _recycleLog(log: Label) {
+    this._logPool.put(log.node);
+  }
+
+  private _reset() {
+    this.currentLogs.forEach((log) => {
+      log.node.parent = null;
+      this._recycleLog(log);
+    });
+  }
 }

@@ -13,10 +13,15 @@ export enum GameEventType {
   NormalEnd = "NormalEnd",
 
   SendValue = "SendValue",
+
+  LeaveGame = "LeaveGame",
+  BackToLobby = "BackToLobby",
 }
 
 export enum ButtonEventType {
   OnCreateGameBtnClick = "OnCreateGameBtnClick",
+  OnJoinGameBtnClick = "OnJoinGameBtnClick",
+  OnBackLobbyBtnClick = "OnBackLobbyBtnClick",
 }
 
 window.GameEvent = new EventTarget();

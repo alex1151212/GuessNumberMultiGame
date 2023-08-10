@@ -39,7 +39,7 @@ export class GameEffect extends Component {
       .to(1.5, { scale: new Vec3(0, 0, 0) }, { easing: "fade" })
       .start();
   }
-  
+
   private _gameEndEffect(message: NormalEndRespType) {
     console.log("Game End");
 

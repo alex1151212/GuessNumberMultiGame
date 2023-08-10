@@ -1,6 +1,6 @@
 import { _decorator, Button, Component, Label, Node } from "cc";
 import Client from "../../../System/Client/Client";
-import { GameEventType } from "../../../System/Event.type";
+import { ButtonEventType, GameEventType } from "../../../System/Event.type";
 const { ccclass, property } = _decorator;
 
 @ccclass("GameRoomItem")
@@ -17,9 +17,10 @@ export class GameRoomItem extends Component {
   private _gameName: string = null;
   private _playerAmount: string = null;
 
-
   protected onLoad(): void {
+    
     this.node.on(Button.EventType.CLICK, () => {
+      GameEvent.emit(ButtonEventType.OnJoinGameBtnClick);
       GameEvent.emit(GameEventType.JoinGame, this._gameName);
     });
   }

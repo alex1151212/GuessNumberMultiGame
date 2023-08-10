@@ -12,7 +12,7 @@ import {
 import ApplicationConfig from "../Data/Type/Application.type";
 import Parameter from "../Toolkit/Utils/Parameter";
 import Client from "./Client/Client";
-import { ClientEventType, GameEventType } from "./Event.type";
+import { ButtonEventType, ClientEventType, GameEventType } from "./Event.type";
 import {
   Message,
   NormalEndRespType,
@@ -30,12 +30,6 @@ const { ccclass, property } = _decorator;
 export default class Application extends Component {
   @property(ApplicationConfig)
   private config: ApplicationConfig = null;
-
-  @property(Node)
-  private messageLogView: Node = null;
-
-  @property(GameRoomView)
-  private gameRoomView: GameRoomView = null;
 
   private static instance: Application = null;
 
@@ -71,16 +65,6 @@ export default class Application extends Component {
     GameEvent.on(ClientEventType.OnMessage, (message: Message) => {
       this._messageHandler(message);
     });
-
-    GameEvent.on(
-      GameEventType.JoinGame,
-      (gameRoomId: string) => {
-        this.gameRoomView.node.active = false;
-        this.messageLogView.active = true;
-        Client.Instance.joinGame(gameRoomId);
-      },
-      this
-    );
   }
 
   private _messageHandler(message: Message) {
@@ -88,10 +72,9 @@ export default class Application extends Component {
       switch (message.type) {
         case GameEventType.GetGames:
           GameEvent.emit(GameEventType.GetGames, message.data);
+
           break;
         case GameEventType.GetPlayers:
-          break;
-        case GameEventType.JoinGame:
           break;
         case GameEventType.Playing:
           GameEvent.emit(
@@ -114,8 +97,8 @@ export default class Application extends Component {
 
   private overrideDefaultConfig(): void {
     const { config } = this;
-    // config.serverAddress = Parameter.get("gameDomain", config.serverAddress);
-    config.serverAddress =
-      "wss://gnm-api.codle.cc/ws/" + Parameter.get("answer", "1234");
+    config.serverAddress = Parameter.get("gameDomain", config.serverAddress);
+    // config.serverAddress =
+    //   "wss://gnm-api.codle.cc/ws/" + Parameter.get("answer", "1234");
   }
 }

@@ -94,4 +94,10 @@ export default class Client extends EventTarget {
     };
     this._send(getGamesMessage);
   }
+  public leaveGame() {
+    const leaveGameMessage: Message = {
+      type: GameEventType.LeaveGame,
+    };
+    this._send(leaveGameMessage);
+  }
 }

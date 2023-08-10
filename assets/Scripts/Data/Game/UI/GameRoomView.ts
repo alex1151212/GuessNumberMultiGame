@@ -39,16 +39,19 @@ export class GameRoomView extends Component {
 
   protected onLoad(): void {
     this._root = this.scrollContent.node;
+    GameEvent.on(
+      GameEventType.JoinGame,
+      (gameRoomId: string) => {
+        Client.Instance.joinGame(gameRoomId);
+      },
+      this
+    );
     GameEvent.on(GameEventType.GetGames, this._displayGameRoom, this);
-  }
-
-  protected onDestroy(): void {
-    GameEvent.off(GameEventType.GetGames, this._displayGameRoom, this);
   }
 
   private _displayGameRoom(message: Object) {
     if (this.currentGameRooms.length > 0) this._reset();
-    const gameRoomData = message as GameRoomType
+    const gameRoomData = message as GameRoomType;
 
     for (let key in gameRoomData) {
       const newGameRoom = this._getGameRoom();
