@@ -97,8 +97,7 @@ export default class Application extends Component {
 
   private overrideDefaultConfig(): void {
     const { config } = this;
-    config.serverAddress = Parameter.get("gameDomain", config.serverAddress);
-    // config.serverAddress =
-    //   "wss://gnm-api.codle.cc/ws/" + Parameter.get("answer", "1234");
+    // config.serverAddress = Parameter.get("gameDomain", config.serverAddress);
+    config.serverAddress = "wss://gnm-api.codle.cc/ws/";
   }
 }
