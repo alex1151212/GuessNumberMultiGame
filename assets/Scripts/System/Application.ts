@@ -97,7 +97,7 @@ export default class Application extends Component {
 
   private overrideDefaultConfig(): void {
     const { config } = this;
-    config.serverAddress = "ws://localhost:8448/ws";
-    // config.serverAddress = "wss://gnm-api.codle.cc/ws";
+    // config.serverAddress = "ws://localhost:8448/ws";
+    config.serverAddress = "wss://gnm-api.codle.cc/ws";
   }
 }
