@@ -17,11 +17,13 @@ export class GameRoomItem extends Component {
   private _gameName: string = null;
   private _playerAmount: string = null;
 
+  public get gameName() {
+    return this._gameName;
+  }
+
   protected onLoad(): void {
-    
-    this.node.on(Button.EventType.CLICK, () => {
-      GameEvent.emit(ButtonEventType.OnJoinGameBtnClick);
-      GameEvent.emit(GameEventType.JoinGame, this._gameName);
+    this.button.node.on(Button.EventType.CLICK, () => {
+      GameEvent.emit(ButtonEventType.OnOpenInputGameAnswerPopupClick);
     });
   }
 

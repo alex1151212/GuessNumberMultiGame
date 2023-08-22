@@ -6,6 +6,7 @@ import {
   Message,
   PlayingDataType,
   CreateGameDataType,
+  InputGameAnswerType,
 } from "../../Toolkit/Types/Message.type";
 import { GameEventType } from "../Event.type";
 
@@ -62,15 +63,16 @@ export default class Client extends EventTarget {
     this._send(getGamesMessage);
   }
 
-  public joinGame(gameId: string) {
+  public joinGame(gameId: string, gameAnswer: string) {
     const data: JoinGameDataType = {
       gameId: gameId,
+      gameAnswer: gameAnswer,
     };
-    const getGamesMessage: Message = {
+    const joinGameMessage: Message = {
       type: GameEventType.JoinGame,
       data: data,
     };
-    this._send(getGamesMessage);
+    this._send(joinGameMessage);
   }
 
   public playGame(guessNumber: string) {

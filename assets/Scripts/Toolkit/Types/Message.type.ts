@@ -2,13 +2,22 @@ import { GameEventType } from "../../System/Event.type";
 
 export interface Message {
   type: GameEventType;
-  data?: string | JoinGameDataType | PlayingDataType | NormalEndRespType;
+  data?:
+    | string
+    | JoinGameDataType
+    | PlayingDataType
+    | NormalEndRespType
+    | CreateGameDataType;
 }
 export interface JoinGameDataType {
   gameId: string;
+  gameAnswer: string;
 }
 export interface CreateGameDataType {
   gameId: string;
+}
+export interface InputGameAnswerType {
+  gameAnswer: string;
 }
 
 export interface PlayingDataType {

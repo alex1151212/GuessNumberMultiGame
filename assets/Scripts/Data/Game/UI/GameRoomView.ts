@@ -31,18 +31,27 @@ export class GameRoomView extends Component {
 
   private _root: Node = null;
 
+  private _gameName: string = null;
+
   private readonly _gameRoomPool: NodePool = new NodePool();
 
   private get currentGameRooms() {
     return this._root.getComponentsInChildren(GameRoomItem);
   }
 
+  private get gameName() {
+    return this._gameName;
+  }
+  private set gameName(gameName: string) {
+    this._gameName = gameName;
+  }
+
   protected onLoad(): void {
     this._root = this.scrollContent.node;
     GameEvent.on(
       GameEventType.JoinGame,
-      (gameRoomId: string) => {
-        Client.Instance.joinGame(gameRoomId);
+      (gameAnswer: string) => {
+        Client.Instance.joinGame(this.gameName, gameAnswer);
       },
       this
     );
@@ -67,6 +76,9 @@ export class GameRoomView extends Component {
         const newNode = instantiate(this.gameRoomItemPrefab);
         newNode.on("recycle", () => {
           this._recycleGameRoom(newNode.getComponent(GameRoomItem));
+        });
+        newNode.getComponent(Button).node.on(Button.EventType.CLICK, () => {
+          this._gameName = newNode.getComponent(GameRoomItem).gameName;
         });
 
         return newNode;

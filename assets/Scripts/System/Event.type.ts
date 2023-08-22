@@ -22,6 +22,8 @@ export enum ButtonEventType {
   OnCreateGameBtnClick = "OnCreateGameBtnClick",
   OnJoinGameBtnClick = "OnJoinGameBtnClick",
   OnBackLobbyBtnClick = "OnBackLobbyBtnClick",
+  OnOpenInputGameAnswerPopupClick = "OnOpenInputGameAnswerPopupClick",
+  OnCloseInputGameAnswerPopupClick = "OnCloseInputGameAnswerPopupClick",
 }
 
 window.GameEvent = new EventTarget();

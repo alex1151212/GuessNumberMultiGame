@@ -6,7 +6,7 @@ const { ccclass, property } = cc._decorator;
 
 // 一般縮放基類
 @ccclass("CreateGame")
-export class Popup extends cc.Component {
+export class CreateGame extends cc.Component {
   @property(cc.EditBox)
   protected readonly gameIdInput: cc.EditBox = null;
 
@@ -15,10 +15,10 @@ export class Popup extends cc.Component {
 
   private _gameId: string = null;
 
-  private set gameId(value: string) {
+  public set gameId(value: string) {
     this._gameId = value;
   }
-  private get gameId() {
+  public get gameId() {
     return this._gameId;
   }
 
